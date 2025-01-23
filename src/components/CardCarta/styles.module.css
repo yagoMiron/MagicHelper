@@ -1,0 +1,23 @@
+.carta {
+  background-color: #ffffff;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  border-radius: 12px;
+  padding: 8px 4px;
+}
+.cardImg {
+  width: 200px;
+}
+.cardName {
+  height: 50px;
+}
+
+@media screen and (max-width: 680px) {
+  .carta {
+    width: 80%;
+  }
+}

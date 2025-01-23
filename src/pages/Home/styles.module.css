@@ -1,0 +1,72 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.listaCartas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  grid-gap: 30px;
+  background-color: white;
+  padding: 20px 100px;
+  box-sizing: border-box;
+  width: 100vw;
+}
+.pesquisa {
+  background-color: #242424;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0px;
+  gap: 10px;
+}
+.pesquisa select {
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #171717;
+  height: 32px;
+  border: none;
+  padding: 0 10px;
+  font-family: "regular";
+  margin-right: 40px;
+}
+.pesquisa label {
+  font-size: 1.5rem;
+}
+.pesquisa input[type="text"] {
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #171717;
+  height: 32px;
+  border: none;
+  padding: 0 10px;
+  font-family: "regular";
+}
+.searchBtn {
+  background-color: white;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #171717;
+  height: 32px;
+  border: none;
+}
+.searchBtn:hover {
+  background-color: #d83a00;
+  cursor: pointer;
+  color: white;
+}
+
+@media screen and (max-width: 680px) {
+  .pesquisa {
+    flex-direction: column;
+  }
+  .pesquisa select,
+  .pesquisa input[type="text"] {
+    box-sizing: border-box;
+    width: 60%;
+    margin-right: 0px;
+  }
+}
