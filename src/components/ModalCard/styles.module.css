@@ -30,3 +30,12 @@ td {
   color: #cc0f0f;
   font-family: "bold";
 }
+
+.fav {
+  height: 32px;
+}
+.cardName {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

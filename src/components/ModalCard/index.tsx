@@ -1,5 +1,6 @@
 import { Card } from "../../models/Card";
 import styles from "./styles.module.css";
+import fullstar from "../../assets/img/full-star.svg";
 
 type Props = {
   card: Card;
@@ -19,7 +20,10 @@ const ModalCard = ({ card }: Props) => {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.cardInfo}>
-        <h2>{card.name}</h2>
+        <h2 className={styles.cardName}>
+          {card.name}
+          <img src={fullstar} alt="favorito" className={styles.fav} />
+        </h2>
         <p>
           <strong>Custo de Mana:</strong> {card.mana_cost}
           <br />

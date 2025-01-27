@@ -4,6 +4,7 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Logout from "../pages/Logout";
+import Colecao from "../pages/Colecao";
 
 export const routes: RouteObject[] = [
   {
@@ -15,6 +16,14 @@ export const routes: RouteObject[] = [
     element: (
       <ProtectedRoute>
         <Home />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/colecao",
+    element: (
+      <ProtectedRoute>
+        <Colecao />
       </ProtectedRoute>
     ),
   },

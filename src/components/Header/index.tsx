@@ -5,8 +5,13 @@ import styles from "./styles.module.css";
 import logout from "../../assets/img/logout.png";
 import centelha from "../../assets/img/centelha.png";
 import { UserContext } from "../../context/UserContext";
+import { Pages } from "../../enums/Pages";
 
-const Header = () => {
+type Props = {
+  atualPage: Pages;
+};
+
+const Header = ({ atualPage }: Props) => {
   const { photoURL, name } = useContext(UserContext);
 
   return (
@@ -15,6 +20,18 @@ const Header = () => {
       <h1 className={styles.appTitle}>
         <strong>Magic</strong>Helper
       </h1>
+      <div className={styles.nav}>
+        {atualPage != Pages.SEARCH && (
+          <Link to="/home" className={styles.anchor}>
+            Pesquisar Carta
+          </Link>
+        )}
+        {atualPage != Pages.COLECAO && (
+          <Link to="/colecao" className={styles.anchor}>
+            Minha Coleção
+          </Link>
+        )}
+      </div>
 
       <img src={photoURL} className={styles.thumb} alt={name} />
 
