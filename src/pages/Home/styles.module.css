@@ -58,6 +58,16 @@
   cursor: pointer;
   color: white;
 }
+.resetedBtn {
+  padding: 0;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: auto;
+}
 
 @media screen and (max-width: 680px) {
   .pesquisa {

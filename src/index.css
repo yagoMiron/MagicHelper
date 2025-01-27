@@ -9,6 +9,12 @@ body {
   font-family: "regular";
 }
 
+.customModal {
+  border-radius: 1rem;
+  width: 75%;
+  max-width: none;
+}
+
 @media screen and (max-width: 600px) {
   html {
     font-size: 14px;

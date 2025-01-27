@@ -25,6 +25,7 @@ export class CardService {
         const lista_cartas = data.map((e: any) => {
           const card: Card = {
             name: e.name,
+            artist: e.artist,
             image_uris: {
               small: e.image_uris?.small || cardback,
               large: e.image_uris?.large || cardback,
@@ -32,6 +33,10 @@ export class CardService {
             prices: {
               usd: e.prices.usd,
             },
+            legalities: e.legalities,
+            mana_cost: e.mana_cost,
+            rarity: e.rarity,
+            type_line: e.type_line,
           };
           return card;
         });

@@ -1,0 +1,32 @@
+.modalContainer {
+  display: flex;
+  color: #181818;
+  padding: 20px 50px;
+}
+.cardImage {
+  width: 400px;
+  height: 100%;
+}
+.cardInfo {
+  width: 100%;
+}
+.legalidade div {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+}
+.legalidade th,
+td {
+  border: 1px solid;
+  padding: 5px 10px;
+  font-family: "bold";
+}
+
+.legal {
+  color: #2bb610;
+  font-family: "bold";
+}
+.ilegal {
+  color: #cc0f0f;
+  font-family: "bold";
+}
