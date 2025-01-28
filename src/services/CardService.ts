@@ -8,7 +8,6 @@ import {
   doc,
   getDoc,
   getDocs,
-  orderBy,
   query,
   setDoc,
   where,
@@ -65,7 +64,7 @@ export class CardService {
       });
     return results;
   }
-  async save(card: Card, email: string) {
+  async save(card: Card, email: string, qtd: number) {
     const id = this._generateId(email, card.name);
     const ref = doc(
       store,
@@ -75,7 +74,7 @@ export class CardService {
     const register = new CardRegister({
       ownerEmail: email,
       card: card,
-      qtd: 1,
+      qtd: qtd,
     });
 
     await setDoc(ref, register);
@@ -100,9 +99,8 @@ export class CardService {
     );
 
     const snapshot = await getDocs(q);
-    const cards: Card[] = [];
-    snapshot.forEach((doc) => cards.push(doc.data().card));
-    console.log(cards);
+    const cards: CardRegister[] = [];
+    snapshot.forEach((doc) => cards.push(doc.data()));
 
     return cards;
   }

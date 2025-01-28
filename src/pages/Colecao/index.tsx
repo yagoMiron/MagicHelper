@@ -6,14 +6,22 @@ import CardCarta from "../../components/CardCarta";
 import Modal from "react-responsive-modal";
 import ModalCard from "../../components/ModalCard";
 import { useContext, useEffect, useState } from "react";
-import { Card } from "../../models/Card";
+import { Card, CardRegister } from "../../models/Card";
 import { CardService } from "../../services/CardService";
 import { UserContext } from "../../context/UserContext";
 
 const Colecao = () => {
   const [loading, isLoading] = useState(false);
   const [showModal, shouldShowModal] = useState(false);
-  const [colecao, setColecao] = useState<Card[]>([]);
+  const [colecao, setColecao] = useState<CardRegister[]>([]);
+  const [quantidade, setQuantidade] = useState<number[]>([]);
+  const setQtd = (index: number, qtd: number) => {
+    let arr = [...quantidade];
+    arr[index] = qtd;
+    console.log(arr);
+
+    setQuantidade(arr);
+  };
   const [selectedCard, selectCard] = useState<Card>({
     name: "",
     image_uris: {
@@ -58,6 +66,11 @@ const Colecao = () => {
     (async () => {
       isLoading(true);
       const collection = await cardService.findAllByOwner(email);
+      const temp: number[] = [];
+      collection.forEach((c) => {
+        temp.push(c.qtd);
+      });
+      setQuantidade(temp);
       isLoading(false);
       setColecao(collection);
     })();
@@ -79,19 +92,43 @@ const Colecao = () => {
           <>
             <h1>Sua Coleção:</h1>
             <div className={styles.listaCartas}>
-              {colecao.map((c, i) => (
-                <button
-                  key={i}
-                  className={styles.resetedBtn}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    selectCard(c);
-                    shouldShowModal(true);
-                  }}
-                >
-                  <CardCarta card={c} />
-                </button>
-              ))}
+              {colecao.map((c, i) => {
+                return (
+                  <div key={i}>
+                    <button
+                      className={styles.resetedBtn}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        selectCard(c.card);
+                        shouldShowModal(true);
+                      }}
+                    >
+                      <CardCarta card={c.card}></CardCarta>
+                    </button>
+                    <div className={styles.btns}>
+                      <input
+                        type="button"
+                        value="-"
+                        className={styles.addBtn}
+                        onClick={() => {
+                          cardService.save(c.card, email, quantidade[i] - 1);
+                          setQtd(i, quantidade[i] - 1);
+                        }}
+                      />
+                      {quantidade[i]}
+                      <input
+                        type="button"
+                        value="+"
+                        className={styles.addBtn}
+                        onClick={() => {
+                          cardService.save(c.card, email, quantidade[i] + 1);
+                          setQtd(i, quantidade[i] + 1);
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </>
         )}

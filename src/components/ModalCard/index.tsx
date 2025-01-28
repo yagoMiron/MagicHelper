@@ -57,7 +57,7 @@ const ModalCard = ({ card }: Props) => {
               className={styles.btn}
               onClick={() => {
                 setMarked(true);
-                cardService.save(card, email);
+                cardService.save(card, email, 1);
               }}
             >
               <img src={emptystar} alt="favorito" className={styles.fav} />

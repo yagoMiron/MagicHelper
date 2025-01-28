@@ -4,9 +4,10 @@ import { Card } from "../../models/Card";
 
 type Props = {
   card: Card;
+  children?: any;
 };
 
-const CardCarta = ({ card }: Props) => {
+const CardCarta = ({ card, children }: Props) => {
   return (
     <div className={styles.carta}>
       <img
@@ -15,6 +16,7 @@ const CardCarta = ({ card }: Props) => {
         alt={card.name}
       />
       <span className={styles.cardName}>{card.name}</span>
+      {children}
     </div>
   );
 };
