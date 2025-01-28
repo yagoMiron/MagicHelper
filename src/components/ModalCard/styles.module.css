@@ -30,6 +30,12 @@ td {
   color: #cc0f0f;
   font-family: "bold";
 }
+.btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
 
 .fav {
   height: 32px;

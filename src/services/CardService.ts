@@ -1,6 +1,20 @@
 import { BuscaDeCards } from "../models/BuscaDeCards";
-import { Card } from "../models/Card";
+import { Card, cardConverter, CardRegister } from "../models/Card";
 import cardback from "../assets/img/cardback.png";
+
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+import { store } from "../config/firebase";
+import { FirebaseContainer } from "../models/FirebaseContainer";
 
 export class CardService {
   private _URL = "https://api.scryfall.com/cards";
@@ -50,5 +64,60 @@ export class CardService {
         return resultado;
       });
     return results;
+  }
+  async save(card: Card, email: string) {
+    const id = this._generateId(email, card.name);
+    const ref = doc(
+      store,
+      FirebaseContainer.CARDS_COLLECTION_NAME,
+      id
+    ).withConverter(cardConverter);
+    const register = new CardRegister({
+      ownerEmail: email,
+      card: card,
+      qtd: 1,
+    });
+
+    await setDoc(ref, register);
+  }
+
+  async findByOwnerEmailAndName(ownerEmail: string, name: string) {
+    const id = this._generateId(ownerEmail, name);
+    const ref = doc(
+      store,
+      FirebaseContainer.CARDS_COLLECTION_NAME,
+      id
+    ).withConverter(cardConverter);
+
+    const snapshot = await getDoc(ref);
+    return snapshot.data();
+  }
+
+  async findAllByOwner(ownerEmail: string) {
+    const ref = collection(store, FirebaseContainer.CARDS_COLLECTION_NAME);
+    const q = query(ref, where("ownerEmail", "==", ownerEmail)).withConverter(
+      cardConverter
+    );
+
+    const snapshot = await getDocs(q);
+    const cards: Card[] = [];
+    snapshot.forEach((doc) => cards.push(doc.data().card));
+    console.log(cards);
+
+    return cards;
+  }
+
+  async deletebyOwnerEmailAndName(ownerEmail: string, name: string) {
+    const id = this._generateId(ownerEmail, name);
+    const ref = doc(
+      store,
+      FirebaseContainer.CARDS_COLLECTION_NAME,
+      id
+    ).withConverter(cardConverter);
+    await deleteDoc(ref);
+  }
+
+  private _generateId(ownerEmail: string, name: string) {
+    return `${ownerEmail}|${name.replace(/\s/g, "")}`;
   }
 }

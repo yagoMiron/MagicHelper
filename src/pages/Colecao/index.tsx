@@ -5,18 +5,15 @@ import styles from "./styles.module.css";
 import CardCarta from "../../components/CardCarta";
 import Modal from "react-responsive-modal";
 import ModalCard from "../../components/ModalCard";
-import { useState } from "react";
-import { BuscaDeCards } from "../../models/BuscaDeCards";
+import { useContext, useEffect, useState } from "react";
 import { Card } from "../../models/Card";
+import { CardService } from "../../services/CardService";
+import { UserContext } from "../../context/UserContext";
 
 const Colecao = () => {
   const [loading, isLoading] = useState(false);
   const [showModal, shouldShowModal] = useState(false);
-  const [resultadoPesquisa, setResultadoPesquisa] = useState<BuscaDeCards>({
-    total_cards: 0,
-    has_more: false,
-    data: [],
-  });
+  const [colecao, setColecao] = useState<Card[]>([]);
   const [selectedCard, selectCard] = useState<Card>({
     name: "",
     image_uris: {
@@ -55,6 +52,16 @@ const Colecao = () => {
       vintage: "not_legal",
     },
   });
+  const { email } = useContext(UserContext);
+  const cardService = new CardService();
+  useEffect(() => {
+    (async () => {
+      isLoading(true);
+      const collection = await cardService.findAllByOwner(email);
+      isLoading(false);
+      setColecao(collection);
+    })();
+  }, []);
   return (
     <>
       <Header atualPage={Pages.COLECAO} />
@@ -68,11 +75,11 @@ const Colecao = () => {
           wrapperClass=""
           visible={loading}
         />
-        {!loading && resultadoPesquisa.data.length > 0 && (
+        {!loading && colecao.length > 0 && (
           <>
-            <h1>Cartas encontradas:</h1>
+            <h1>Sua Coleção:</h1>
             <div className={styles.listaCartas}>
-              {resultadoPesquisa?.data.map((c, i) => (
+              {colecao.map((c, i) => (
                 <button
                   key={i}
                   className={styles.resetedBtn}
@@ -89,9 +96,7 @@ const Colecao = () => {
           </>
         )}
 
-        {!loading && resultadoPesquisa.data.length === 0 && (
-          <p>Nenhuma carta na sua coleção</p>
-        )}
+        {!loading && colecao.length === 0 && <p>Sua coleção está vazia</p>}
       </div>
       <Modal
         open={showModal}

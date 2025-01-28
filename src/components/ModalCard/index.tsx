@@ -1,6 +1,10 @@
 import { Card } from "../../models/Card";
 import styles from "./styles.module.css";
 import fullstar from "../../assets/img/full-star.svg";
+import emptystar from "../../assets/img/empty-star.svg";
+import { CardService } from "../../services/CardService";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext";
 
 type Props = {
   card: Card;
@@ -17,12 +21,48 @@ const ModalCard = ({ card }: Props) => {
         break;
     }
   };
+  const { email } = useContext(UserContext);
+  const cardService = new CardService();
+  const [loading, isLoading] = useState(false);
+  const [isMarked, setMarked] = useState(false);
+  useEffect(() => {
+    (async () => {
+      isLoading(true);
+      const selectedCard = await cardService.findByOwnerEmailAndName(
+        email,
+        card.name
+      );
+      isLoading(false);
+      setMarked(selectedCard != undefined);
+    })();
+  }, []);
+
   return (
     <div className={styles.modalContainer}>
       <div className={styles.cardInfo}>
         <h2 className={styles.cardName}>
           {card.name}
-          <img src={fullstar} alt="favorito" className={styles.fav} />
+          {!loading && isMarked ? (
+            <button
+              className={styles.btn}
+              onClick={() => {
+                setMarked(false);
+                cardService.deletebyOwnerEmailAndName(email, card.name);
+              }}
+            >
+              <img src={fullstar} alt="favorito" className={styles.fav} />
+            </button>
+          ) : (
+            <button
+              className={styles.btn}
+              onClick={() => {
+                setMarked(true);
+                cardService.save(card, email);
+              }}
+            >
+              <img src={emptystar} alt="favorito" className={styles.fav} />
+            </button>
+          )}
         </h2>
         <p>
           <strong>Custo de Mana:</strong> {card.mana_cost}
