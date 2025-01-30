@@ -46,6 +46,7 @@ export class CardService {
             prices: {
               usd: e.prices.usd,
             },
+            colors: e.colors,
             legalities: e.legalities,
             mana_cost: e.mana_cost,
             rarity: e.rarity,

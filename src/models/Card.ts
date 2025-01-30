@@ -17,6 +17,7 @@ export type Card = {
   prices: {
     usd: number;
   };
+  colors: string[];
   artist: string;
   legalities: {
     standard: string;
@@ -55,6 +56,7 @@ export class CardRegister {
     prices: {
       usd: 0.0,
     },
+    colors: ["G"],
     artist: "",
     mana_cost: "0",
     rarity: "commun",

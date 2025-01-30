@@ -23,12 +23,17 @@ const Header = ({ atualPage }: Props) => {
       <div className={styles.nav}>
         {atualPage != Pages.SEARCH && (
           <Link to="/home" className={styles.anchor}>
-            Pesquisar Carta
+            Pesquisar
           </Link>
         )}
         {atualPage != Pages.COLECAO && (
           <Link to="/colecao" className={styles.anchor}>
-            Minha Coleção
+            Coleção
+          </Link>
+        )}
+        {atualPage != Pages.ESTATISTICAS && (
+          <Link to="/estatisticas" className={styles.anchor}>
+            Estatisticas
           </Link>
         )}
       </div>

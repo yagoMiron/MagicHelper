@@ -31,6 +31,7 @@ const Colecao = () => {
     prices: {
       usd: 0.0,
     },
+    colors: [],
     artist: "",
     mana_cost: "0",
     rarity: "commun",
@@ -78,6 +79,7 @@ const Colecao = () => {
   return (
     <>
       <Header atualPage={Pages.COLECAO} />
+
       <div className={styles.container}>
         <Circles
           height="80"
@@ -94,39 +96,58 @@ const Colecao = () => {
             <div className={styles.listaCartas}>
               {colecao.map((c, i) => {
                 return (
-                  <div key={i}>
-                    <button
-                      className={styles.resetedBtn}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        selectCard(c.card);
-                        shouldShowModal(true);
-                      }}
-                    >
-                      <CardCarta card={c.card}></CardCarta>
-                    </button>
-                    <div className={styles.btns}>
-                      <input
-                        type="button"
-                        value="-"
-                        className={styles.addBtn}
-                        onClick={() => {
-                          cardService.save(c.card, email, quantidade[i] - 1);
-                          setQtd(i, quantidade[i] - 1);
-                        }}
-                      />
-                      {quantidade[i]}
-                      <input
-                        type="button"
-                        value="+"
-                        className={styles.addBtn}
-                        onClick={() => {
-                          cardService.save(c.card, email, quantidade[i] + 1);
-                          setQtd(i, quantidade[i] + 1);
-                        }}
-                      />
-                    </div>
-                  </div>
+                  <>
+                    {quantidade[i] != 0 && (
+                      <div key={i}>
+                        <button
+                          className={styles.resetedBtn}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            selectCard(c.card);
+                            shouldShowModal(true);
+                          }}
+                        >
+                          <CardCarta card={c.card}></CardCarta>
+                        </button>
+                        <div className={styles.btns}>
+                          <input
+                            type="button"
+                            value="-"
+                            className={styles.addBtn}
+                            onClick={() => {
+                              if (quantidade[i] - 1 == 0) {
+                                cardService.deletebyOwnerEmailAndName(
+                                  email,
+                                  c.card.name
+                                );
+                              } else {
+                                cardService.save(
+                                  c.card,
+                                  email,
+                                  quantidade[i] - 1
+                                );
+                                setQtd(i, quantidade[i] - 1);
+                              }
+                            }}
+                          />
+                          {quantidade[i]}
+                          <input
+                            type="button"
+                            value="+"
+                            className={styles.addBtn}
+                            onClick={() => {
+                              cardService.save(
+                                c.card,
+                                email,
+                                quantidade[i] + 1
+                              );
+                              setQtd(i, quantidade[i] + 1);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </>
                 );
               })}
             </div>

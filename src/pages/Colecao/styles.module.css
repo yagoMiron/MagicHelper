@@ -42,3 +42,29 @@
   cursor: pointer;
   font-family: "bold";
 }
+@media screen and (max-width: 1300px) {
+  .listaCartas {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .listaCartas {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .listaCartas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 680px) {
+  .listaCartas {
+    grid-template-columns: 1fr;
+    padding: 20px 0px;
+  }
+  .btns {
+    width: 200px;
+    margin: 0 auto;
+  }
+}

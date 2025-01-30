@@ -21,6 +21,36 @@ const ModalCard = ({ card }: Props) => {
         break;
     }
   };
+
+  const colorsToText = (colors: string[]) => {
+    if (colors.length == 0) {
+      return "Incolor";
+    }
+    let result = "";
+    console.log(colors);
+
+    colors.forEach((cor, i) => {
+      switch (cor) {
+        case "W":
+          result += (i != 0 ? ", " : "") + "Branco";
+          break;
+        case "U":
+          result += (i != 0 ? ", " : "") + " Azul";
+          break;
+        case "B":
+          result += (i != 0 ? ", " : "") + "Preto";
+          break;
+        case "R":
+          result += (i != 0 ? ", " : "") + "Vermelho";
+          break;
+        case "G":
+          result += (i != 0 ? ", " : "") + "Verde";
+          break;
+      }
+    });
+
+    return result;
+  };
   const { email } = useContext(UserContext);
   const cardService = new CardService();
   const [loading, isLoading] = useState(false);
@@ -70,6 +100,8 @@ const ModalCard = ({ card }: Props) => {
           <strong>Tipos:</strong> {card.type_line}
           <br />
           <strong>Raridade:</strong> {card.rarity}
+          <br />
+          <strong>Cores:</strong> {colorsToText(card.colors)}
           <br />
           <strong>Artista:</strong> {card.artist}
           <br />

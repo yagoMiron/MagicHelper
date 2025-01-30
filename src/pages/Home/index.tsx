@@ -15,6 +15,7 @@ const Home = () => {
   const [loading, isLoading] = useState(false);
   const [pesquisa, setPesquisa] = useState("");
   const [showModal, shouldShowModal] = useState(false);
+  const [pesquisada, setPesquisada] = useState(false);
   const [resultadoPesquisa, setResultadoPesquisa] = useState<BuscaDeCards>({
     total_cards: 0,
     has_more: false,
@@ -29,6 +30,7 @@ const Home = () => {
     prices: {
       usd: 0.0,
     },
+    colors: [],
     artist: "",
     mana_cost: "0",
     rarity: "commun",
@@ -85,6 +87,7 @@ const Home = () => {
               if (pesquisa) {
                 isLoading(true);
                 setResultadoPesquisa(await cardService.search(pesquisa));
+                setPesquisada(true);
                 isLoading(false);
               }
             }}
@@ -119,10 +122,12 @@ const Home = () => {
             </div>
           </>
         )}
-
-        {!loading && resultadoPesquisa.data.length === 0 && pesquisa !== "" && (
-          <p>Nenhuma carta encontrada</p>
+        {pesquisada === false && (
+          <p>Pesquise por uma carta e adicione a sua coleção</p>
         )}
+        {!loading &&
+          resultadoPesquisa.data.length === 0 &&
+          pesquisada === true && <p>Nenhuma carta encontrada</p>}
       </div>
       <Modal
         open={showModal}
