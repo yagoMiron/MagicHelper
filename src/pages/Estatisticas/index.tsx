@@ -272,7 +272,9 @@ const Estatisticas = () => {
               <br />
               <span>Numero de cartas diferentes = {dataDiferentCard}</span>
               <br />
-              <span>Custo total da Coleção = {dataTotalPrice} USD</span>
+              <span>
+                Custo total da Coleção = {dataTotalPrice.toFixed(2)} USD
+              </span>
             </div>
             <div className={styles.graph}>
               <PieChart

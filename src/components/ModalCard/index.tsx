@@ -15,10 +15,8 @@ const ModalCard = ({ card }: Props) => {
     switch (legalidade) {
       case "legal":
         return <span className={styles.legal}>Legal</span>;
-      case "not_legal":
-        return <span className={styles.ilegal}>Ilegal</span>;
       default:
-        break;
+        return <span className={styles.ilegal}>Ilegal</span>;
     }
   };
 
