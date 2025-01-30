@@ -312,7 +312,7 @@ const Estatisticas = () => {
               <BarChart
                 dataset={dataLegalities}
                 yAxis={[{ scaleType: "band", dataKey: "format" }]}
-                series={[{ dataKey: "legalCards", label: "Vartas Validas" }]}
+                series={[{ dataKey: "legalCards", label: "Cartas Validas" }]}
                 layout="horizontal"
                 xAxis={[
                   {
